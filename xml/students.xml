@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Students>
+    <Student id="1">
+        <name>Andrey</name>
+        <age>21</age>
+        <language>Java</language>
+    </Student>
+    <Student id="2">
+        <name>Viktor</name>
+        <age>20</age>
+        <language>C++</language>
+    </Student>
+</Students>
