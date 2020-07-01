@@ -57,7 +57,7 @@ public class XMLstaxParser {
                         student.setLanguage(xmlEvent.asCharacters().getData());
                     }
                 }
-                // если цикл дошел до закрывающего элемента model.Student,
+                // если цикл дошел до закрывающего элемента Student,
                 // то добавляем считанного из файла студента в список
                 if (xmlEvent.isEndElement()) {
                     EndElement endElement = xmlEvent.asEndElement();

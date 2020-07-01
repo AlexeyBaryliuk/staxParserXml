@@ -32,6 +32,8 @@ public class SAXExample {
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            System.out.println("------------Element------------" + element);
+            System.out.println("------------Is entered------------" + isEntered);
             if (isEntered) {
                 System.out.println(String.format("Найден элемент <%s>, его атрибуты:", qName));
 
@@ -50,7 +52,9 @@ public class SAXExample {
         public void endElement(String uri, String localName, String qName) {
             if (qName.equals(element))
                 isEntered = false;
+            System.out.println("++++++++++++++++++End+++++++++++++++");
         }
+
     }
 }
 
