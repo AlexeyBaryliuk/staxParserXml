@@ -1,11 +1,9 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.Enumeration;
 
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipEntry;
+
 import org.apache.tools.zip.ZipOutputStream;
 
 public class ArchiveFile {
@@ -14,9 +12,11 @@ public class ArchiveFile {
     private final static String zipFile  = "test_zip.zip";
 
     private final String SLASH_BACK      = "/";
-    private final String CHARSET_CP866   = "CP866";
+    private final String CHARSET_UTF_8   = "UTF-8";
 
-    public  boolean ACTION_unzip = true;
+    public  boolean ACTION_unzip
+            = true
+            ;
 
     public ArchiveFile()
     {
@@ -52,13 +52,15 @@ public class ArchiveFile {
         }
 
     }
+
     private void Unzip(final String zipDir) throws Exception
     {
-        ZipFile zipFile = new ZipFile(zipDir, CHARSET_CP866);
+        ZipFile zipFile = new ZipFile(zipDir);
         Enumeration<?> entries = zipFile.getEntries();
-        System.out.println(entries.hasMoreElements());
+        System.out.println("++++++++++++++++" + entries.hasMoreElements());
         while (entries.hasMoreElements()) {
             ZipEntry entry = (ZipEntry) entries.nextElement();
+            System.out.println("********************* = " + entry.getSize());
             String entryName = entry.getName();
             if (entryName.endsWith(SLASH_BACK)) {
                 System.out.println("Create the directory <" + entryName + ">");
@@ -67,14 +69,17 @@ public class ArchiveFile {
             } else
                 checkFolder(entryName);
             System.out.println("Reading the file <" + entryName + ">");
-            InputStream fis = (InputStream) zipFile.getInputStream(entry);
-
+            InputStream fis = zipFile.getInputStream(entry);
+            System.out.println("///////////////// = " + fis.available());
             FileOutputStream fos = new FileOutputStream(entryName);
-            byte[] buffer = new byte[fis.available()];
-            // Считываем буфер
-            fis.read(buffer, 0, buffer.length);
-            // Записываем из буфера в файл
-            fos.write(buffer, 0, buffer.length);
+
+            copyData(fis,fos);
+//            byte[] buffer = new byte[fis.available()];
+//            System.out.println("**********Buf = " + buffer.length);
+//            // Считываем буфер
+//            fis.read(buffer, 0, buffer.length);
+//            // Записываем из буфера в файл
+//            fos.write(buffer, 0, buffer.length);
             fis.close();
             fos.close();
         }
@@ -88,7 +93,7 @@ public class ArchiveFile {
         FileOutputStream fout = new FileOutputStream(zip_file);
         ZipOutputStream zout = new ZipOutputStream(fout);
         // Определение кодировки
-        zout.setEncoding(CHARSET_CP866);
+//        zout.setEncoding(CHARSET_UTF_8);
 
         // Создание объекта File object архивируемой директории
         File fileSource = new File(source_dir);
@@ -127,10 +132,20 @@ public class ArchiveFile {
             fis.close();
         }
     }
+    private static void copyData(InputStream in, OutputStream out) throws Exception {
+        Integer count = 0;
+        while (in.available() > 0) {
+            count++;
+            System.out.println("++++++++++++++++ = " + in.available() + "   Count = " + count);
+            out.write(in.read());
 
+        }
+    }
     public static void main(String[] args)
     {
         new ArchiveFile();
         System.exit(0);
     }
+
+
 }
