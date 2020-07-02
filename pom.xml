@@ -17,6 +17,13 @@
         </dependency>
         <!-- Thanks for using https://jar-download.com -->
 
+        <!-- https://mvnrepository.com/artifact/net.java.dev.stax-utils/stax-utils -->
+        <dependency>
+            <groupId>net.java.dev.stax-utils</groupId>
+            <artifactId>stax-utils</artifactId>
+            <version>20070216</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -24,8 +31,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>7</source>
-                    <target>7</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>

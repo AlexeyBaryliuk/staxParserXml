@@ -1,0 +1,73 @@
+import javanet.staxutils.IndentingXMLStreamWriter;
+import model.Projects;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StAXWriting {
+
+    public void writeToXml(Path path, List<Projects> projects) throws IOException, XMLStreamException {
+        try (OutputStream os = Files.newOutputStream(path)) {
+            XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
+            XMLStreamWriter writer = null;
+            try {
+                writer = outputFactory.createXMLStreamWriter(os, "utf-8");
+                writeProjectsElem(writer, projects);
+            } finally {
+                if (writer != null)
+                    writer.close();
+            }
+        }
+    }
+
+    private void writeProjectsElem(XMLStreamWriter streamWriter, List<Projects> projects) throws XMLStreamException {
+
+        IndentingXMLStreamWriter writer = null;
+        writer = new IndentingXMLStreamWriter(streamWriter);
+
+        writer.writeStartDocument("utf-8", "1.0");
+//        writer.writeComment("Describes list of projects");
+
+        writer.writeStartElement("projects");
+        for (Projects project : projects)
+            writeProjectElem(writer, project);
+        writer.writeEndElement();
+
+        writer.writeEndDocument();
+    }
+
+    private void writeProjectElem(XMLStreamWriter writer, Projects project) throws XMLStreamException {
+        writer.writeStartElement("project");
+        writer.writeAttribute("ProjectId", project.getProjectId().toString());
+
+        writer.writeStartElement("description");
+        writer.writeCharacters(project.getDescription());
+        writer.writeEndElement();
+
+        writer.writeStartElement("dateAdded");
+        System.out.println(project.getDateAdded().toString());
+        writer.writeCharacters(project.getDateAdded().toString());
+        writer.writeEndElement();
+
+        writer.writeEndElement();
+    }
+
+    public static void main(String[] args) throws IOException, XMLStreamException {
+        List<Projects> projects = new ArrayList<>();
+
+        projects.add(new Projects(1,"2", LocalDate.now()));
+        projects.add(new Projects(2,"3", LocalDate.now()));
+
+       StAXWriting stAXWriting = new StAXWriting();
+       stAXWriting.writeToXml(new File("projects.xml").toPath(),projects);
+    }
+}
