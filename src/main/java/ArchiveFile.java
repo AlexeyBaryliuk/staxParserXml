@@ -133,11 +133,10 @@ public class ArchiveFile {
         }
     }
     private static void copyData(InputStream in, OutputStream out) throws Exception {
-        Integer count = 0;
-        while (in.available() > 0) {
-            count++;
-            System.out.println("++++++++++++++++ = " + in.available() + "   Count = " + count);
-            out.write(in.read());
+        int b;
+        while ((b = in.read()) > 0) {
+
+            out.write(b);
 
         }
     }
@@ -146,6 +145,4 @@ public class ArchiveFile {
         new ArchiveFile();
         System.exit(0);
     }
-
-
 }
