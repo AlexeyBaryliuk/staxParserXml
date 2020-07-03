@@ -1,5 +1,6 @@
-import javanet.staxutils.IndentingXMLStreamWriter;
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
 import model.Projects;
+
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -8,15 +9,19 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StAXWriting {
 
-    public void writeToXml(Path path, List<Projects> projects) throws IOException, XMLStreamException {
-        try (OutputStream os = Files.newOutputStream(path)) {
+    public void writeToXml( List<Projects> projects) throws IOException, XMLStreamException {
+
+        String PATH_TO_PROJECTS = "projects.xml";
+
+        File file = new File(PATH_TO_PROJECTS);
+
+        try (OutputStream os = Files.newOutputStream(file.toPath())) {
             XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
             XMLStreamWriter writer = null;
             try {
@@ -68,6 +73,6 @@ public class StAXWriting {
         projects.add(new Projects(2,"3", LocalDate.now()));
 
        StAXWriting stAXWriting = new StAXWriting();
-       stAXWriting.writeToXml(new File("projects.xml").toPath(),projects);
+       stAXWriting.writeToXml(projects);
     }
 }

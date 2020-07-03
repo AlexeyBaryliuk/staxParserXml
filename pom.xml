@@ -6,25 +6,56 @@
 
     <groupId>org.example</groupId>
     <artifactId>staxParserXml</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <modules>
+        <module>test1</module>
+        <module>work</module>
+        <module>model</module>
+    </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.10.8</version>
-        </dependency>
-        <!-- Thanks for using https://jar-download.com -->
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
 
-        <!-- https://mvnrepository.com/artifact/net.java.dev.stax-utils/stax-utils -->
-        <dependency>
-            <groupId>net.java.dev.stax-utils</groupId>
-            <artifactId>stax-utils</artifactId>
-            <version>20070216</version>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
 
-    </dependencies>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>test1</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>work</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.ant</groupId>
+                <artifactId>ant</artifactId>
+                <version>1.10.8</version>
+            </dependency>
+            <!-- Thanks for using https://jar-download.com -->
+
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>txw2</artifactId>
+                <version>2.3.0</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -35,8 +66,8 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
-
 
 </project>

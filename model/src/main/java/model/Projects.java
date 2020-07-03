@@ -1,8 +1,6 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Set;
 
 public class Projects {
     /**
