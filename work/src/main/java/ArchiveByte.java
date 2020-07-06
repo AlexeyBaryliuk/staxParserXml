@@ -13,6 +13,8 @@ public class ArchiveByte {
     public static void main(String[] args) throws IOException {
 
         byte[] bytes = Files.readAllBytes(Paths.get(zipDir));
+
+
         File file = new File("projects.xml");
 
         try {
